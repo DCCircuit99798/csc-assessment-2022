@@ -17,7 +17,7 @@ entry_frame = ttk.Frame(root)
 entry_frame.pack()
 
 button_frame = ttk.Frame(root)
-button_frame.pack()
+button_frame.pack(pady=20)
 
 print_frame = ttk.Frame(root)
 print_frame.pack()
@@ -55,20 +55,20 @@ quantity_label.grid(column=0, row=5)
 quantity_entry = ttk.Entry(entry_frame)
 quantity_entry.grid(column=1, row=5)
 
-# add buttons to print/delete details and quit program
-print_button = ttk.Button(entry_frame, text='Print Details')
-print_button.grid(column=3, row=2, sticky=tk.E)
+# add buttons to print/delete details and quit program (in button_frame)
+print_button = ttk.Button(button_frame, text='Print Details')
+print_button.grid(column=0, row=0, sticky=tk.E)
 
-delete_label = ttk.Label(entry_frame, text='Row to delete:')
-delete_label.grid(column=2, row=3, sticky=tk.W)
+delete_label = ttk.Label(button_frame, text='Row to delete:')
+delete_label.grid(column=0, row=1, sticky=tk.W)
 
-delete_entry = ttk.Entry(entry_frame)
-delete_entry.grid(column=3, row=3, sticky=tk.E)
+delete_entry = ttk.Entry(button_frame)
+delete_entry.grid(column=1, row=1, sticky=tk.E)
 
-delete_button = ttk.Button(entry_frame, text='Delete Details')
-delete_button.grid(column=3, row=4, sticky=tk.E)
+delete_button = ttk.Button(button_frame, text='Delete Details')
+delete_button.grid(column=1, row=0, sticky=tk.E)
 
-quit_button = ttk.Button(entry_frame, text='Quit')
-quit_button.grid(column=3, row=5, sticky=tk.E)
+quit_button = ttk.Button(button_frame, text='Quit')
+quit_button.grid(column=1, row=2, sticky=tk.E)
 
 root.mainloop()
