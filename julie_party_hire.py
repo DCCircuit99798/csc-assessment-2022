@@ -49,11 +49,53 @@ def append_check():
     else:
         quantity_valid = True
 
+    # checks each field and displays an error if it is invalid,
+    # or clears the error if is it valid
+
+    # checks name
+    if name_valid == False:
+        name_error = ttk.Label(entry_frame, text='Name cannot be empty')
+        name_error.grid(column=1, row=2)
+
+    else:
+        name_error = ttk.Label(entry_frame, text='')
+        name_error.grid(column=1, row=2)
+
+    # checks receipt number
+    if receipt_valid == False:
+        receipt_error = ttk.Label(entry_frame,
+                                  text='Receipt number must only contain numbers')
+        receipt_error.grid(column=1, row=4)
+        
+    else:
+        receipt_error = ttk.Label(entry_frame, text='')
+        receipt_error.grid(column=1, row=4)
+
+    # checks item
+    if item_valid == False:
+        item_error = ttk.Label(entry_frame, text='Item cannot be empty')
+        item_error.grid(column=1, row=6)
+
+    else:
+        item_error = ttk.Label(entry_frame, text='')
+        item_error.grid(column=1, row=6)
+
+    # checks quantity
+    if quantity_valid == False:
+        quantity_error = ttk.Label(entry_frame,
+                               text='Quantity must be an integer between 1-500 (inclusive)')
+        quantity_error.grid(column=1, row=8)
+        
+    else:
+        quantity_error = ttk.Label(entry_frame, text='')
+        quantity_error.grid(column=1, row=8)
+        
+
     # if all fields are valid, append the details
     if [name_valid, receipt_valid, item_valid, quantity_valid] == [True, True, True, True]:
         append_details()
-    
 
+    
 # subroutine to append details
 def append_details():
 
@@ -115,11 +157,18 @@ def delete_check():
     else:
         delete_valid = True
 
-    if delete_valid == True:
+    # if input to delete row is invalid, display an error
+    if delete_valid == False:
+        delete_error = ttk.Label(entry_frame,
+                                 text='Chosen row does not exist in list')
+        delete_error.grid(column=3, row=4)
+
+    # if input is valid, clear the error and delete details of the chosen row
+    else:
+        delete_error = ttk.Label(entry_frame, text='')
+        delete_error.grid(column=3, row=4)
         delete_details()
         
-
-
 # subroutine to delete a chosen row
 def delete_details():
 
@@ -142,7 +191,7 @@ def delete_details():
 # main function
 def main():
 
-    global root, print_frame, \
+    global root, entry_frame, print_frame, \
            name_entry, receipt_entry, item_entry, \
            quantity_entry, delete_entry, \
            info_list
@@ -216,6 +265,22 @@ def main():
 
     quit_button = ttk.Button(entry_frame, text='Quit', command=quit)
     quit_button.grid(column=3, row=9, sticky=tk.E)
+
+    # create empty labels to display error messages when user input is invalid
+    name_error = ttk.Label(entry_frame, text='')
+    name_error.grid(column=1, row=2)
+
+    receipt_error = ttk.Label(entry_frame, text='')
+    receipt_error.grid(column=1, row=4)
+
+    item_error = ttk.Label(entry_frame, text='')
+    item_error.grid(column=1, row=6)
+
+    quantity_error = ttk.Label(entry_frame, text='')
+    quantity_error.grid(column=1, row=8)
+
+    delete_error = ttk.Label(entry_frame, text='')
+    delete_error.grid(column=3, row=4)
 
     # create label for the "printed details" section
     printed_details_label = ttk.Label(print_frame, text='Printed Details')
