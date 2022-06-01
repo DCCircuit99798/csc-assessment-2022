@@ -12,6 +12,48 @@ from tkinter import ttk
 def quit():
     root.destroy()
 
+# subroutine to check the validity of user input when submitting customer info
+def append_check():
+    global name_valid, receipt_valid, item_valid, quantity_valid
+    
+    # check if name is empty
+    if name_entry.get() == '':
+        name_valid = False
+
+    else:
+        name_valid = True
+
+    # check if receipt number is a number
+    # (if the field is empty, it will not pass the check)
+    if receipt_entry.get().isdigit() == False:
+        receipt_valid = False
+
+    else:
+        receipt_valid = True
+
+    # check if item is empty
+    if item_entry.get() == '':
+        item_valid = False
+
+    else:
+        item_valid = True
+
+    # check if quantity is a number
+    # (if the field is empty, it will not pass the check)
+    if quantity_entry.get().isdigit() == False:
+        quantity_valid = False
+
+    elif int(quantity_entry.get()) < 1 or int(quantity_entry.get()) > 500:
+        quantity_valid = False
+
+    else:
+        quantity_valid = True
+
+    # if all fields are valid, append the details
+    if [name_valid, receipt_valid, item_valid, quantity_valid] == [True, True, True, True]:
+        append_details()
+    
+
 # subroutine to append details
 def append_details():
 
@@ -55,11 +97,31 @@ def print_details():
         output_output = ttk.Label(print_frame, text=info_list[i][3])
         output_output.grid(row=i+2, column=4)
 
-# subroutine to delete a chosen row
-def delete_details():
+# subroutine to check validity of user input when choosing a row to delete
+def delete_check():
+    global delete_valid, row_to_delete
 
     # get the chosen row to delete from the delete field
     row_to_delete = delete_entry.get()
+    
+    # check if input is an integer
+    if row_to_delete.isdigit() == False:
+        delete_valid = False
+
+    # check if chosen row is not in the list
+    elif int(row_to_delete) >= len(info_list):
+        delete_valid = False
+
+    else:
+        delete_valid = True
+
+    if delete_valid == True:
+        delete_details()
+        
+
+
+# subroutine to delete a chosen row
+def delete_details():
 
     # delete the chosen "row" from the list
     info_list.pop(int(row_to_delete))
@@ -140,7 +202,7 @@ def main():
     quantity_entry.grid(column=1, row=9)
 
     # add buttons to print/delete details and quit program
-    print_button = ttk.Button(entry_frame, text='Print Details', command=append_details)
+    print_button = ttk.Button(entry_frame, text='Print Details', command=append_check)
     print_button.grid(column=3, row=3, sticky=tk.E)
 
     delete_label = ttk.Label(entry_frame, text='Row to delete:')
@@ -149,7 +211,7 @@ def main():
     delete_entry = ttk.Entry(entry_frame)
     delete_entry.grid(column=3, row=5, sticky=tk.E)
 
-    delete_button = ttk.Button(entry_frame, text='Delete Details', command=delete_details)
+    delete_button = ttk.Button(entry_frame, text='Delete Details', command=delete_check)
     delete_button.grid(column=3, row=7, sticky=tk.E)
 
     quit_button = ttk.Button(entry_frame, text='Quit', command=quit)
