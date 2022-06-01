@@ -55,11 +55,34 @@ def print_details():
         output_output = ttk.Label(print_frame, text=info_list[i][3])
         output_output.grid(row=i+2, column=4)
 
+# subroutine to delete a chosen row
+def delete_details():
+
+    # get the chosen row to delete from the delete field
+    row_to_delete = delete_entry.get()
+
+    # delete the chosen "row" from the list
+    info_list.pop(int(row_to_delete))
+
+    # loops through all labels in print_frame
+    for label in print_frame.grid_slaves():
+
+        # deletes all labels below the headings
+        if int(label.grid_info()['row']) > 1:
+                label.destroy()
+
+    # clear the delete entry field
+    delete_entry.delete(0, 'end')
+
+    # reprint all the details
+    print_details()
+
 # main function
 def main():
 
     global root, print_frame, \
-           name_entry, receipt_entry, item_entry, quantity_entry, \
+           name_entry, receipt_entry, item_entry, \
+           quantity_entry, delete_entry, \
            info_list
     
     # create root window
@@ -68,9 +91,11 @@ def main():
     # create separate frames for entry fields, print/delete buttons,
     # and printed info
     entry_frame = ttk.Frame(root)
+    entry_frame['padding'] = (5, 5, 5, 15)
     entry_frame.pack()
 
     print_frame = ttk.Frame(root)
+    print_frame['padding'] = (5, 5, 5, 5)
     print_frame.pack()
 
     # create list to keep customer information
@@ -124,27 +149,31 @@ def main():
     delete_entry = ttk.Entry(entry_frame)
     delete_entry.grid(column=3, row=5, sticky=tk.E)
 
-    delete_button = ttk.Button(entry_frame, text='Delete Details')
+    delete_button = ttk.Button(entry_frame, text='Delete Details', command=delete_details)
     delete_button.grid(column=3, row=7, sticky=tk.E)
 
     quit_button = ttk.Button(entry_frame, text='Quit', command=quit)
     quit_button.grid(column=3, row=9, sticky=tk.E)
 
+    # create label for the "printed details" section
+    printed_details_label = ttk.Label(print_frame, text='Printed Details')
+    printed_details_label.grid(column=0, row=0, columnspan=5)
+    
     # create headings to print information under
     row_heading = ttk.Label(print_frame, text='Row #', style='Heading.TLabel')
-    row_heading.grid(column=0, row=0)
+    row_heading.grid(column=0, row=1)
     
     name_heading = ttk.Label(print_frame, text='Customer name', style='Heading.TLabel')
-    name_heading.grid(column=1, row=0)
+    name_heading.grid(column=1, row=1)
 
     receipt_heading = ttk.Label(print_frame, text='Receipt number', style='Heading.TLabel')
-    receipt_heading.grid(column=2, row=0)
+    receipt_heading.grid(column=2, row=1)
 
     item_heading = ttk.Label(print_frame, text='Item hired', style='Heading.TLabel')
-    item_heading.grid(column=3, row=0)
+    item_heading.grid(column=3, row=1)
 
     quantity_heading = ttk.Label(print_frame, text='Quantity hired', style='Heading.TLabel')
-    quantity_heading.grid(column=4, row=0)
+    quantity_heading.grid(column=4, row=1)
 
 
 
