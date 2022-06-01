@@ -40,20 +40,20 @@ def print_details():
     for i in range(0, len(info_list)):
 
         # create labels to output info
-        row_output = ttk.Label(print_frame, text=str(i))
-        row_output.grid(row=i+2, column=0)
+        row_output = ttk.Label(print_frame, text=str(i), width=20)
+        row_output.grid(row=0, column=i+1)
 
-        name_output = ttk.Label(print_frame, text=info_list[i][0])
-        name_output.grid(row=i+2, column=1)
+        name_output = ttk.Label(print_frame, text=info_list[i][0], width=20)
+        name_output.grid(row=1, column=i+1)
 
-        receipt_output = ttk.Label(print_frame, text=info_list[i][1])
-        receipt_output.grid(row=i+2, column=2)
+        receipt_output = ttk.Label(print_frame, text=info_list[i][1], width=20)
+        receipt_output.grid(row=2, column=i+1)
 
-        item_output = ttk.Label(print_frame, text=info_list[i][2])
-        item_output.grid(row=i+2, column=3)
+        item_output = ttk.Label(print_frame, text=info_list[i][2], width=20)
+        item_output.grid(row=3, column=i+1)
 
-        output_output = ttk.Label(print_frame, text=info_list[i][3])
-        output_output.grid(row=i+2, column=4)
+        output_output = ttk.Label(print_frame, text=info_list[i][3], width=20)
+        output_output.grid(row=4, column=i+1)
 
 # main function
 def main():
@@ -135,16 +135,16 @@ def main():
     row_heading.grid(column=0, row=0)
     
     name_heading = ttk.Label(print_frame, text='Customer name', style='Heading.TLabel')
-    name_heading.grid(column=1, row=0)
+    name_heading.grid(column=0, row=1)
 
     receipt_heading = ttk.Label(print_frame, text='Receipt number', style='Heading.TLabel')
-    receipt_heading.grid(column=2, row=0)
+    receipt_heading.grid(column=0, row=2)
 
     item_heading = ttk.Label(print_frame, text='Item hired', style='Heading.TLabel')
-    item_heading.grid(column=3, row=0)
+    item_heading.grid(column=0, row=3)
 
     quantity_heading = ttk.Label(print_frame, text='Quantity hired', style='Heading.TLabel')
-    quantity_heading.grid(column=4, row=0)
+    quantity_heading.grid(column=0, row=4)
 
 
 
