@@ -54,42 +54,32 @@ def append_check():
 
     # checks name
     if name_valid == False:
-        name_error = ttk.Label(entry_frame, text='Name cannot be empty')
-        name_error.grid(column=1, row=2)
+        name_message.set('Name cannot be empty')
 
     else:
-        name_error = ttk.Label(entry_frame, text='')
-        name_error.grid(column=1, row=2)
+        name_message.set('')
 
     # checks receipt number
     if receipt_valid == False:
-        receipt_error = ttk.Label(entry_frame,
-                                  text='Receipt number must only contain numbers')
-        receipt_error.grid(column=1, row=4)
+        receipt_message.set('Receipt number must only contain numbers')
         
     else:
-        receipt_error = ttk.Label(entry_frame, text='')
-        receipt_error.grid(column=1, row=4)
+        receipt_message.set('')
 
     # checks item
     if item_valid == False:
-        item_error = ttk.Label(entry_frame, text='Item cannot be empty')
-        item_error.grid(column=1, row=6)
-
+        item_message.set('Item cannot be empty')
+        
     else:
-        item_error = ttk.Label(entry_frame, text='')
-        item_error.grid(column=1, row=6)
+        item_message.set('')
 
     # checks quantity
     if quantity_valid == False:
-        quantity_error = ttk.Label(entry_frame,
-                               text='Quantity must be an integer between 1-500 (inclusive)')
-        quantity_error.grid(column=1, row=8)
+        quantity_message.set('Quantity must be an integer between 1-500 (inclusive)')
         
     else:
-        quantity_error = ttk.Label(entry_frame, text='')
-        quantity_error.grid(column=1, row=8)
-        
+        quantity_message.set('')
+
 
     # if all fields are valid, append the details
     if [name_valid, receipt_valid, item_valid, quantity_valid] == [True, True, True, True]:
@@ -159,14 +149,11 @@ def delete_check():
 
     # if input to delete row is invalid, display an error
     if delete_valid == False:
-        delete_error = ttk.Label(entry_frame,
-                                 text='Chosen row does not exist in list')
-        delete_error.grid(column=3, row=4)
-
+        delete_message.set('Chosen row does not exist in list')
+        
     # if input is valid, clear the error and delete details of the chosen row
     else:
-        delete_error = ttk.Label(entry_frame, text='')
-        delete_error.grid(column=3, row=4)
+        delete_message.set('')
         delete_details()
         
 # subroutine to delete a chosen row
@@ -194,6 +181,8 @@ def main():
     global root, entry_frame, print_frame, \
            name_entry, receipt_entry, item_entry, \
            quantity_entry, delete_entry, \
+           name_message, receipt_message, item_message, \
+           quantity_message, delete_message, \
            info_list
     
     # create root window
@@ -266,20 +255,27 @@ def main():
     quit_button = ttk.Button(entry_frame, text='Quit', command=quit)
     quit_button.grid(column=3, row=9, sticky=tk.E)
 
+    # create string variables to configure error messages
+    name_message = tk.StringVar(entry_frame, '')
+    receipt_message = tk.StringVar(entry_frame, '')
+    item_message = tk.StringVar(entry_frame, '')
+    quantity_message = tk.StringVar(entry_frame, '')
+    delete_message = tk.StringVar(entry_frame, '')
+
     # create empty labels to display error messages when user input is invalid
-    name_error = ttk.Label(entry_frame, text='')
+    name_error = ttk.Label(entry_frame, textvariable=name_message)
     name_error.grid(column=1, row=2)
 
-    receipt_error = ttk.Label(entry_frame, text='')
+    receipt_error = ttk.Label(entry_frame, textvariable=receipt_message)
     receipt_error.grid(column=1, row=4)
 
-    item_error = ttk.Label(entry_frame, text='')
+    item_error = ttk.Label(entry_frame, textvariable=item_message)
     item_error.grid(column=1, row=6)
 
-    quantity_error = ttk.Label(entry_frame, text='')
+    quantity_error = ttk.Label(entry_frame, textvariable=quantity_message)
     quantity_error.grid(column=1, row=8)
 
-    delete_error = ttk.Label(entry_frame, text='')
+    delete_error = ttk.Label(entry_frame, textvariable=delete_message)
     delete_error.grid(column=3, row=4)
 
     # create label for the "printed details" section
