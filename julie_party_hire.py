@@ -6,11 +6,25 @@ to delete a chosen row when a customer returns an item.
 
 # import required modules
 import tkinter as tk
+from tkinter import messagebox
 from tkinter import ttk
 
 # subroutine to quit the program
 def quit():
-    root.destroy()
+
+    # create a messagebox
+    quit_confirm = messagebox.askquestion('Quit Program', \
+                              'Are you sure you want to close the program? Customer info will be lost!', \
+                              icon='warning')
+
+    # if user selects yes, quit the program
+    if quit_confirm == 'yes':
+        root.destroy()
+
+    # if user selects no, don't quit
+    else:
+        pass
+    
 
 # subroutine to check the validity of user input when submitting customer info
 def append_check():
