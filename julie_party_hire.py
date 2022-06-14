@@ -9,6 +9,10 @@ import tkinter as tk
 from tkinter import messagebox
 from tkinter import ttk
 
+# constants for the min and max quantity allowed to hire
+MIN_HIRE = 1
+MAX_HIRE = 500
+    
 
 def quit():
     """Creates messagebox to confirm if the user wants to quit."""
@@ -66,8 +70,9 @@ def append_check():
     if quantity_entry.get().isdigit() == False:
         quantity_valid = False
 
-    # check if quantity entered is between 1 and 500
-    elif int(quantity_entry.get()) < 1 or int(quantity_entry.get()) > 500:
+    # check if quantity entered is between MIN_HIRE AND MAX_HIRE
+    elif (int(quantity_entry.get()) < MIN_HIRE or
+          int(quantity_entry.get()) > MAX_HIRE):
         quantity_valid = False
 
     else:
@@ -96,8 +101,9 @@ def append_check():
 
     # displays error if quantity is invalid
     if quantity_valid == False:
-        quantity_message.set('Quantity must be an integer between 1-500 '
-                             '(inclusive)')
+        quantity_message.set(
+            'Quantity must be an integer between '
+            '%d-%d (inclusive)' %(MIN_HIRE, MAX_HIRE))
         
     else:
         quantity_message.set('')
