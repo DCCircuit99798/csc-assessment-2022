@@ -1,21 +1,24 @@
-'''
-This program asks for the customer's full name, receipt number, the item hired,
-and the quantity hired and prints it on a GUI. The program also gives the option
-to delete a chosen row when a customer returns an item.
-'''
+"""
+This program asks for the customer's full name, receipt number, the item
+hired, and the quantity hired and prints it on a GUI. The program also
+gives the option to delete a chosen row when a customer returns an item.
+"""
 
 # import required modules
 import tkinter as tk
 from tkinter import messagebox
 from tkinter import ttk
 
-# subroutine to quit the program
+
 def quit():
+    """Creates messagebox to confirm if the user wants to quit."""
 
     # create a messagebox
-    quit_confirm = messagebox.askquestion('Quit Program', \
-                              'Are you sure you want to close the program? Customer info will be lost!', \
-                              icon='warning')
+    quit_confirm = messagebox.askquestion(
+        'Quit Program',
+        'Are you sure you want to close the program? '
+        'Customer info will be lost!',
+        icon='warning')
 
     # if user selects yes, quit the program
     if quit_confirm == 'yes':
@@ -24,10 +27,16 @@ def quit():
     # if user selects no, don't quit
     else:
         pass
-    
 
-# subroutine to check the validity of user input when submitting customer info
+    
 def append_check():
+    """Checks the validity of the user inputs before appending customer
+    details to the list.
+
+    If any fields are invalid, the program will display an error above
+    the invalid field without appending and printing customer details.
+    """
+    
     global name_valid, receipt_valid, item_valid, quantity_valid
     
     # check if name is empty
@@ -38,7 +47,7 @@ def append_check():
         name_valid = True
 
     # check if receipt number is a number
-    # (if the field is empty, it will not pass the check)
+    # (if the field is empty, it will not pass this check)
     if receipt_entry.get().isdigit() == False:
         receipt_valid = False
 
@@ -53,55 +62,57 @@ def append_check():
         item_valid = True
 
     # check if quantity is a number
-    # (if the field is empty, it will not pass the check)
+    # (if the field is empty, it will not pass this check)
     if quantity_entry.get().isdigit() == False:
         quantity_valid = False
 
+    # check if quantity entered is between 1 and 500
     elif int(quantity_entry.get()) < 1 or int(quantity_entry.get()) > 500:
         quantity_valid = False
 
     else:
         quantity_valid = True
 
-    # checks each field and displays an error if it is invalid,
-    # or clears the error if is it valid
-
-    # checks name
+    # displays error if name is invalid
     if name_valid == False:
         name_message.set('Name cannot be empty')
 
     else:
         name_message.set('')
 
-    # checks receipt number
+    # displays error if receipt number is invalid
     if receipt_valid == False:
         receipt_message.set('Receipt number must only contain numbers')
         
     else:
         receipt_message.set('')
 
-    # checks item
+    # displays error if item is invalid
     if item_valid == False:
         item_message.set('Item cannot be empty')
         
     else:
         item_message.set('')
 
-    # checks quantity
+    # displays error if quantity is invalid
     if quantity_valid == False:
-        quantity_message.set('Quantity must be an integer between 1-500 (inclusive)')
+        quantity_message.set('Quantity must be an integer between 1-500 '
+                             '(inclusive)')
         
     else:
         quantity_message.set('')
 
 
     # if all fields are valid, append the details
-    if [name_valid, receipt_valid, item_valid, quantity_valid] == [True, True, True, True]:
+    if ([name_valid, receipt_valid, item_valid, quantity_valid]
+            == [True, True, True, True]):
         append_details()
 
     
-# subroutine to append details
 def append_details():
+    """Appends customer details to a multidimensional list containing
+    details of all customers before clearing the entry fields.
+    """
 
     # get information of customer to put into smaller list
     mini_list = [name_entry.get(),
@@ -121,8 +132,11 @@ def append_details():
     # print details on window after appending info to list
     print_details()
 
-# subroutine to print details after appending or deleting
+
 def print_details():
+    """Prints customer details into print_frame after appending or
+    deleting details.
+    """
 
     # loops through each item in info_list
     for i in range(0, len(info_list)):
@@ -143,8 +157,15 @@ def print_details():
         output_output = ttk.Label(print_frame, text=info_list[i][3])
         output_output.grid(row=i+2, column=4)
 
-# subroutine to check validity of user input when choosing a row to delete
+
 def delete_check():
+    """Checks if the row chosen by the user exists in the
+    multidimensional list before deleting it.
+
+    If the row chosen is not valid, the program will display an error
+    above the 'delete row' field.
+    """
+    
     global delete_valid, row_to_delete
 
     # get the chosen row to delete from the delete field
@@ -169,9 +190,12 @@ def delete_check():
     else:
         delete_message.set('')
         delete_details()
+
         
-# subroutine to delete a chosen row
 def delete_details():
+    """Deletes details from the chosen row in the list and clears the
+    labels displaying the data before reprinting customer details.
+    """
 
     # delete the chosen "row" from the list
     info_list.pop(int(row_to_delete))
@@ -189,8 +213,12 @@ def delete_details():
     # reprint all the details
     print_details()
 
-# main function
+
 def main():
+    """Main function to create the window and all labels,
+    entry fields, and buttons, as well as the list to store all
+    customer details in.
+    """
 
     global root, entry_frame, print_frame, \
            name_entry, receipt_entry, item_entry, \
@@ -224,11 +252,11 @@ def main():
                     font=('Sofia Pro', 24, 'bold'),
                     anchor='center')
 
-    style.configure('Heading1.TLabel', # headings for each frame
+    style.configure('Heading1.TLabel',  # headings for each frame
                     font=('Verdana', 18),
                     anchor='center')
     
-    style.configure('Heading2.TLabel', # heading to print customer info under
+    style.configure('Heading2.TLabel',  # heading to print customer info under
                     font=('Tahoma', 13),
                     anchor='center',
                     width=20)
@@ -243,11 +271,13 @@ def main():
     style.configure('TButton', font=('Tahoma', 11))
 
     # create title label for the program
-    title_label = ttk.Label(entry_frame, text="Julie's Party Hire", style='Title.TLabel')
+    title_label = ttk.Label(
+        entry_frame, text="Julie's Party Hire", style='Title.TLabel')
     title_label.grid(column=0, row=0, columnspan=4)
 
     # create label for the "enter details" section
-    enter_details_label = ttk.Label(entry_frame, text='Enter Details', style='Heading1.TLabel')
+    enter_details_label = ttk.Label(
+        entry_frame, text='Enter Details', style='Heading1.TLabel')
     enter_details_label.grid(column=0, row=1, columnspan=4)
 
     # create labels and entry fields for user to input customer info
@@ -280,7 +310,8 @@ def main():
     separator_label.grid(column=2, row=2)
 
     # add buttons to print/delete details and quit program
-    print_button = ttk.Button(entry_frame, text='Print Details', command=append_check)
+    print_button = ttk.Button(
+        entry_frame, text='Print Details', command=append_check)
     print_button.grid(column=4, row=3, sticky=tk.E)
 
     delete_label = ttk.Label(entry_frame, text='Row to delete:')
@@ -289,7 +320,8 @@ def main():
     delete_entry = ttk.Entry(entry_frame, width=20, **entry_font)
     delete_entry.grid(column=4, row=5, sticky=tk.E)
 
-    delete_button = ttk.Button(entry_frame, text='Delete Details', command=delete_check)
+    delete_button = ttk.Button(
+        entry_frame, text='Delete Details', command=delete_check)
     delete_button.grid(column=4, row=7, sticky=tk.E)
 
     quit_button = ttk.Button(entry_frame, text='Quit', command=quit)
@@ -303,39 +335,50 @@ def main():
     delete_message = tk.StringVar(entry_frame, '')
 
     # create empty labels to display error messages when user input is invalid
-    name_error = ttk.Label(entry_frame, textvariable=name_message, style='Error.TLabel')
+    name_error = ttk.Label(
+        entry_frame, textvariable=name_message, style='Error.TLabel')
     name_error.grid(column=1, row=2, sticky=tk.EW)
 
-    receipt_error = ttk.Label(entry_frame, textvariable=receipt_message, style='Error.TLabel')
+    receipt_error = ttk.Label(
+        entry_frame, textvariable=receipt_message, style='Error.TLabel')
     receipt_error.grid(column=1, row=4, sticky=tk.EW)
 
-    item_error = ttk.Label(entry_frame, textvariable=item_message, style='Error.TLabel')
+    item_error = ttk.Label(
+        entry_frame, textvariable=item_message, style='Error.TLabel')
     item_error.grid(column=1, row=6, sticky=tk.EW)
 
-    quantity_error = ttk.Label(entry_frame, textvariable=quantity_message, style='Error.TLabel')
+    quantity_error = ttk.Label(
+        entry_frame, textvariable=quantity_message, style='Error.TLabel')
     quantity_error.grid(column=1, row=8, sticky=tk.EW)
 
-    delete_error = ttk.Label(entry_frame, textvariable=delete_message, style='Error.TLabel')
+    delete_error = ttk.Label(
+        entry_frame, textvariable=delete_message, style='Error.TLabel')
     delete_error.grid(column=4, row=4, sticky=tk.EW)
 
     # create label for the "printed details" section
-    printed_details_label = ttk.Label(print_frame, text='Printed Details', style='Heading1.TLabel')
+    printed_details_label = ttk.Label(
+        print_frame, text='Printed Details', style='Heading1.TLabel')
     printed_details_label.grid(column=0, row=0, columnspan=5)
     
     # create headings to print information under
-    row_heading = ttk.Label(print_frame, text='Row #', style='Heading2.TLabel')
+    row_heading = ttk.Label(
+        print_frame, text='Row #', style='Heading2.TLabel')
     row_heading.grid(column=0, row=1)
     
-    name_heading = ttk.Label(print_frame, text='Customer name', style='Heading2.TLabel')
+    name_heading = ttk.Label(
+        print_frame, text='Customer name', style='Heading2.TLabel')
     name_heading.grid(column=1, row=1)
 
-    receipt_heading = ttk.Label(print_frame, text='Receipt number', style='Heading2.TLabel')
+    receipt_heading = ttk.Label(
+        print_frame, text='Receipt number', style='Heading2.TLabel')
     receipt_heading.grid(column=2, row=1)
 
-    item_heading = ttk.Label(print_frame, text='Item hired', style='Heading2.TLabel')
+    item_heading = ttk.Label(
+        print_frame, text='Item hired', style='Heading2.TLabel')
     item_heading.grid(column=3, row=1)
 
-    quantity_heading = ttk.Label(print_frame, text='Quantity hired', style='Heading2.TLabel')
+    quantity_heading = ttk.Label(
+        print_frame, text='Quantity hired', style='Heading2.TLabel')
     quantity_heading.grid(column=4, row=1)
     
 
