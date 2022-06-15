@@ -12,7 +12,7 @@ from tkinter import ttk
 # constants for the min and max quantity allowed to hire
 MIN_HIRE = 1
 MAX_HIRE = 500
-    
+
 
 def quit():
     """Creates messagebox to confirm if the user wants to quit."""
@@ -40,7 +40,7 @@ def append_check():
     If any fields are invalid, the program will display an error above
     the invalid field without appending and printing customer details.
     """
-    
+
     global name_valid, receipt_valid, item_valid, quantity_valid
     
     # check if name is empty
@@ -279,12 +279,12 @@ def main():
     # create title label for the program
     title_label = ttk.Label(
         entry_frame, text="Julie's Party Hire", style='Title.TLabel')
-    title_label.grid(column=0, row=0, columnspan=4)
+    title_label.grid(column=0, row=0, columnspan=5)
 
     # create label for the "enter details" section
     enter_details_label = ttk.Label(
         entry_frame, text='Enter Details', style='Heading1.TLabel')
-    enter_details_label.grid(column=0, row=1, columnspan=4)
+    enter_details_label.grid(column=0, row=1, columnspan=5)
 
     # create labels and entry fields for user to input customer info
     name_label = ttk.Label(entry_frame, text='Customer full name')
