@@ -38,80 +38,58 @@ def append_check():
     details to the list.
 
     If any fields are invalid, the program will display an error above
-    the invalid field without appending and printing customer details.
+    the invalid field without printing customer details.
     """
 
-    global name_valid, receipt_valid, item_valid, quantity_valid
+    # create variable to track validity of all fields
+    all_valid = True
     
     # check if name is empty
     if name_entry.get() == '':
-        name_valid = False
-
-    else:
-        name_valid = True
-
-    # check if receipt number is a number
-    # (if the field is empty, it will not pass this check)
-    if receipt_entry.get().isdigit() == False:
-        receipt_valid = False
-
-    else:
-        receipt_valid = True
-
-    # check if item is empty
-    if item_entry.get() == '':
-        item_valid = False
-
-    else:
-        item_valid = True
-
-    # check if quantity is a number
-    # (if the field is empty, it will not pass this check)
-    if quantity_entry.get().isdigit() == False:
-        quantity_valid = False
-
-    # check if quantity entered is between MIN_HIRE AND MAX_HIRE
-    elif (int(quantity_entry.get()) < MIN_HIRE or
-          int(quantity_entry.get()) > MAX_HIRE):
-        quantity_valid = False
-
-    else:
-        quantity_valid = True
-
-    # displays error if name is invalid
-    if name_valid == False:
         name_message.set('Name cannot be empty')
+        all_valid = False
 
     else:
         name_message.set('')
 
-    # displays error if receipt number is invalid
-    if receipt_valid == False:
+    # check if receipt number is a number
+    # (if the field is empty, it will not pass this check)
+    if receipt_entry.get().isdigit() == False:
         receipt_message.set('Receipt number must only contain numbers')
-        
+        all_valid = False
+
     else:
         receipt_message.set('')
 
-    # displays error if item is invalid
-    if item_valid == False:
+    # check if item is empty
+    if item_entry.get() == '':
         item_message.set('Item cannot be empty')
-        
+        all_valid = False
+
     else:
         item_message.set('')
 
-    # displays error if quantity is invalid
-    if quantity_valid == False:
+    # check if quantity is a number
+    # (if the field is empty, it will not pass this check)
+    if quantity_entry.get().isdigit() == False:
         quantity_message.set(
             'Quantity must be an integer between '
             '%d-%d (inclusive)' %(MIN_HIRE, MAX_HIRE))
-        
+        all_valid = False
+
+    # check if quantity entered is between MIN_HIRE AND MAX_HIRE
+    elif (int(quantity_entry.get()) < MIN_HIRE or
+          int(quantity_entry.get()) > MAX_HIRE):
+        quantity_message.set(
+            'Quantity must be an integer between '
+            '%d-%d (inclusive)' %(MIN_HIRE, MAX_HIRE))
+        all_valid = False
+
     else:
         quantity_message.set('')
 
-
     # if all fields are valid, append the details
-    if ([name_valid, receipt_valid, item_valid, quantity_valid]
-            == [True, True, True, True]):
+    if all_valid == True:
         append_details()
 
     
@@ -172,31 +150,23 @@ def delete_check():
     above the 'delete row' field.
     """
     
-    global delete_valid, row_to_delete
+    global row_to_delete
 
     # get the chosen row to delete from the delete field
     row_to_delete = delete_entry.get()
     
     # check if input is an integer
     if row_to_delete.isdigit() == False:
-        delete_valid = False
+        delete_message.set('Chosen row does not exist in list')
 
     # check if chosen row is not in the list
     elif int(row_to_delete) >= len(info_list):
-        delete_valid = False
-
-    else:
-        delete_valid = True
-
-    # if input to delete row is invalid, display an error
-    if delete_valid == False:
         delete_message.set('Chosen row does not exist in list')
-        
-    # if input is valid, clear the error and delete details of the chosen row
+
     else:
         delete_message.set('')
         delete_details()
-
+        
         
 def delete_details():
     """Deletes details from the chosen row in the list and clears the
